@@ -9,39 +9,43 @@ type Props = {
   setOpen: (open: boolean) => void;
 };
 
-export default function ScannerDialog({ open, setOpen }: Props) {
+export default function ScannerDialog({ open = false, setOpen }: Props) {
   useEffect(() => {
-    const resultElement = document.getElementById("result");
-    const readerElement = document.getElementById("reader");
-    if (!resultElement || !readerElement) return;
+    if (!open) return;
 
-    function onScanSuccess(decodedText: string, decodedResult: any) {
-      const result = `Code matched = ${decodedText}<br />Result: ${JSON.stringify(
-        decodedResult
-      )}`;
-      console.log(result);
+    setTimeout(() => {
+      const resultElement = document.getElementById("result");
+      const readerElement = document.getElementById("reader");
+      if (!resultElement || !readerElement) return;
 
-      resultElement!.innerHTML = result;
-    }
+      function onScanSuccess(decodedText: string, decodedResult: any) {
+        const result = `Code matched = ${decodedText}<br />Result: ${JSON.stringify(
+          decodedResult
+        )}`;
+        console.log(result);
 
-    function onScanFailure(error: any) {
-      const err = `Code scan error = ${error}`;
-      console.warn(err);
-      resultElement!.innerHTML = err;
-    }
+        resultElement!.innerHTML = result;
+      }
 
-    let html5QrcodeScanner = new Html5QrcodeScanner(
-      "reader",
-      {
-        fps: 10,
-        qrbox: { width: 250, height: 250 },
-        supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
-      },
-      false
-    );
+      function onScanFailure(error: any) {
+        const err = `Code scan error = ${error}`;
+        console.warn(err);
+        resultElement!.innerHTML = err;
+      }
 
-    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-  }, []);
+      let html5QrcodeScanner = new Html5QrcodeScanner(
+        "reader",
+        {
+          fps: 10,
+          qrbox: { width: 250, height: 250 },
+          supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+        },
+        false
+      );
+
+      html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    }, 300);
+  }, [open]);
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -109,8 +113,6 @@ export default function ScannerDialog({ open, setOpen }: Props) {
                             id="reader"
                             style={{
                               width: "100%",
-                              marginLeft: 16,
-                              marginRight: 16,
                             }}
                           />
 
