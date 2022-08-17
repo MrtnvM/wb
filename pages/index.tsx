@@ -1,67 +1,28 @@
-import { Html5QrcodeScanner } from "html5-qrcode";
-import { useEffect } from "react";
-import MainNavbar from "./components/navbar/MainNavbar";
+import { useState } from "react";
 import { BiBarcodeReader } from "react-icons/bi";
+import MainNavbar from "./components/navbar/MainNavbar";
+import ScannerDialog from "./components/scanner/ScannerDialog";
 
 export default function Home() {
-  useEffect(() => {
-    const resultElement = document.getElementById("result");
-    const readerElement = document.getElementById("reader");
-    if (!resultElement || !readerElement) return;
-
-    function onScanSuccess(decodedText: string, decodedResult: any) {
-      const result = `Code matched = ${decodedText}<br />Result: ${JSON.stringify(
-        decodedResult
-      )}`;
-      console.log(result);
-
-      resultElement!.innerHTML = result;
-    }
-
-    function onScanFailure(error: any) {
-      const err = `Code scan error = ${error}`;
-      console.warn(err);
-      resultElement!.innerHTML = err;
-    }
-
-    let html5QrcodeScanner = new Html5QrcodeScanner(
-      "reader",
-      {
-        fps: 10,
-        qrbox: { width: 250, height: 250 },
-        supportedScanTypes: [],
-      },
-      false
-    );
-
-    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-  }, []);
+  const [open, setOpen] = useState(false);
 
   return (
     <div>
-      <main>
-        <MainNavbar />
+      <ScannerDialog open={open} setOpen={setOpen} />
 
-        {/* <div
-          id="reader"
-          style={{ width: "100%", marginLeft: 16, marginRight: 16 }}
-        /> */}
-        <div
-          id="result"
-          style={{ margin: 16, border: "1px solid #ddd", padding: 12 }}
-        ></div>
-      </main>
+      <MainNavbar />
 
       <div className="min-h-full"></div>
 
-      <footer className="flex flex-col items-end max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 fixed bottom-0 left-0 right-0">
+      <footer className="flex flex-col items-center max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 fixed bottom-0 left-0 right-0">
         <button
-          className="rounded-full px-4 py-2 mb-4 drop-shadow-xl flex row items-center"
+          className="rounded-full px-5 py-3 mb-4 drop-shadow-xl flex row items-center"
           style={{ backgroundColor: "#6366F1" }}
+          onClick={() => setOpen(true)}
         >
-          <BiBarcodeReader color="white" size={16} className="mr-2" />
+          <BiBarcodeReader color="white" size={20} className="mr-2" />
           <span
-            className="text-white tracking-wide"
+            className="text-white tracking-wide text-lg"
             style={{ fontFamily: "Inter" }}
           >
             Сканировать
