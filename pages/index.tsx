@@ -41,9 +41,15 @@ export default function Home() {
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
-        <div id="reader" style={{ width: 600 }} />
+        <div
+          id="reader"
+          style={{ width: "100%", marginLeft: 16, marginRight: 16 }}
+        />
 
-        <div id="result" style={{ marginTop: 16, marginBottom: 16 }}></div>
+        <div
+          id="result"
+          style={{ margin: 16, border: "1px solid #ddd", padding: 12 }}
+        ></div>
 
         <p className={styles.description}>
           Get started by editing{" "}
