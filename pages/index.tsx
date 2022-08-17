@@ -1,6 +1,39 @@
-import styles from '../styles/Home.module.css'
+import styles from "../styles/Home.module.css";
+import { Html5QrcodeScanner } from "html5-qrcode";
+import { useEffect } from "react";
 
 export default function Home() {
+  useEffect(() => {
+    const resultElement = document.getElementById("result")!;
+
+    function onScanSuccess(decodedText: string, decodedResult: any) {
+      const result = `Code matched = ${decodedText}<br />Result: ${JSON.stringify(
+        decodedResult
+      )}`;
+      console.log(result);
+
+      resultElement.innerHTML = result;
+    }
+
+    function onScanFailure(error: any) {
+      const err = `Code scan error = ${error}`;
+      console.warn(err);
+      resultElement.innerHTML = err;
+    }
+
+    let html5QrcodeScanner = new Html5QrcodeScanner(
+      "reader",
+      {
+        fps: 10,
+        qrbox: { width: 250, height: 250 },
+        supportedScanTypes: [],
+      },
+      false
+    );
+
+    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+  }, []);
+
   return (
     <div className={styles.container}>
       <main className={styles.main}>
@@ -8,8 +41,12 @@ export default function Home() {
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
+        <div id="reader" style={{ width: 600 }} />
+
+        <div id="result" style={{ marginTop: 16, marginBottom: 16 }}></div>
+
         <p className={styles.description}>
-          Get started by editing{' '}
+          Get started by editing{" "}
           <code className={styles.code}>pages/index.js</code>
         </p>
 
@@ -50,10 +87,10 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
         </a>
       </footer>
     </div>
-  )
+  );
 }
