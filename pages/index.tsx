@@ -54,16 +54,25 @@ export default function Home() {
 
       <div className="min-h-full"></div>
 
-      <footer>
-        <button className="rounded-full bg-purple-700 px-4 py-2 fixed bottom-8 right-8 drop-shadow-md flex row items-center">
+      <footer className="flex flex-col items-end max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 fixed bottom-0 left-0 right-0">
+        <button
+          className="rounded-full px-4 py-2 mb-4 drop-shadow-xl flex row items-center"
+          style={{ backgroundColor: "#6366F1" }}
+        >
           <BiBarcodeReader color="white" size={16} className="mr-2" />
-          <span className="text-white" style={{ fontFamily: "Inter" }}>
+          <span
+            className="text-white tracking-wide"
+            style={{ fontFamily: "Inter" }}
+          >
             Сканировать
           </span>
         </button>
-
-        <div className="h-2 fixed bottom-0 left-0 right-0 bg-purple-700"></div>
       </footer>
+
+      <div
+        className="h-1 fixed bottom-0 left-0 right-0"
+        style={{ backgroundColor: "#6366F1" }}
+      />
     </div>
   );
 }
