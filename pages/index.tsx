@@ -48,7 +48,7 @@ export default function Home() {
   useEffect(() => {
     const content = document.getElementById("content")!;
 
-    disableBodyScroll(document.body, {
+    disableBodyScroll(content, {
       allowTouchMove: (el) => el.id === "content" || content.contains(el),
     });
   }, []);
