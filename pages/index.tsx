@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiBarcodeReader } from "react-icons/bi";
 import MainNavbar from "./components/navbar/MainNavbar";
 import ScannerDialog from "./components/scanner/ScannerDialog";
 
 export default function Home() {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    document.addEventListener("touchmove", (e) => e.preventDefault(), false);
+  }, []);
 
   return (
     <div>
