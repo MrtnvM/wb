@@ -6,6 +6,8 @@ import ScannerDialog from "./components/scanner/ScannerDialog";
 import moment from "moment";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
+const containerId = "root-container";
+
 const fakes: Barcode[] = [
   { data: "00000", formatId: 9, format: "EAN-13", date: new Date() },
   {
@@ -46,17 +48,16 @@ export default function Home() {
   );
 
   useEffect(() => {
-    const content = document.getElementById("content")!;
+    const rootContainer = document.getElementById(containerId)!;
 
-    disableBodyScroll(document.getElementsByTagName("html")[0]);
-
-    disableBodyScroll(content, {
-      allowTouchMove: (el) => el.id === "content" || content.contains(el),
+    disableBodyScroll(rootContainer, {
+      allowTouchMove: (el) =>
+        el.id === containerId || rootContainer.contains(el),
     });
   }, []);
 
   return (
-    <div className="h-screen w-full flex flex-col">
+    <div id={containerId} className="h-screen w-full flex flex-col">
       <ScannerDialog
         open={open}
         setOpen={setOpen}
