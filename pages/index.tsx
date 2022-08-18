@@ -5,8 +5,31 @@ import MainNavbar from "./components/navbar/MainNavbar";
 import ScannerDialog from "./components/scanner/ScannerDialog";
 import moment from "moment";
 
+const fakes: Barcode[] = [
+  { data: "00000", formatId: 9, format: "EAN-13", date: new Date() },
+  { data: "123456789", formatId: 9, format: "EAN-13", date: new Date() },
+  { data: "123456789", formatId: 9, format: "EAN-13", date: new Date() },
+  { data: "123456789", formatId: 9, format: "EAN-13", date: new Date() },
+  { data: "123456789", formatId: 9, format: "EAN-13", date: new Date() },
+  { data: "123456789", formatId: 9, format: "EAN-13", date: new Date() },
+  { data: "123456789", formatId: 9, format: "EAN-13", date: new Date() },
+  { data: "123456789", formatId: 9, format: "EAN-13", date: new Date() },
+  { data: "123456789", formatId: 9, format: "EAN-13", date: new Date() },
+  { data: "123456789", formatId: 9, format: "EAN-13", date: new Date() },
+  { data: "123456789", formatId: 9, format: "EAN-13", date: new Date() },
+  { data: "123456789", formatId: 9, format: "EAN-13", date: new Date() },
+  { data: "123456789", formatId: 9, format: "EAN-13", date: new Date() },
+  { data: "123456789", formatId: 9, format: "EAN-13", date: new Date() },
+  { data: "123456789", formatId: 9, format: "EAN-13", date: new Date() },
+  { data: "123456789", formatId: 9, format: "EAN-13", date: new Date() },
+  { data: "123456789", formatId: 9, format: "EAN-13", date: new Date() },
+  { data: "123456789", formatId: 9, format: "EAN-13", date: new Date() },
+  { data: "123456789", formatId: 9, format: "EAN-13", date: new Date() },
+  { data: "123456789", formatId: 9, format: "EAN-13", date: new Date() },
+];
+
 export default function Home() {
-  const [barcodes, setBarcodes] = useState<Barcode[]>([]);
+  const [barcodes, setBarcodes] = useState<Barcode[]>(fakes);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -30,7 +53,7 @@ export default function Home() {
 
       <MainNavbar />
 
-      <div className="min-h-full">
+      <div className="min-h-full pt-16 pb-4">
         {barcodes.map((barcode) => (
           <div className="rounded-md shadow-md mx-8 my-4 py-4 px-6 border-neutral-400">
             <div className="mb-2">
