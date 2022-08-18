@@ -4,6 +4,7 @@ import ScanButton from "./components/buttons/ScanButton";
 import MainNavbar from "./components/navbar/MainNavbar";
 import ScannerDialog from "./components/scanner/ScannerDialog";
 import moment from "moment";
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
 const fakes: Barcode[] = [
   { data: "00000", formatId: 9, format: "EAN-13", date: new Date() },
@@ -33,7 +34,7 @@ export default function Home() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    document.addEventListener("touchmove", (e) => e.preventDefault(), false);
+    disableBodyScroll(document.getElementById("content")!);
   }, []);
 
   const onBarcodeScanned = useCallback(
@@ -44,7 +45,7 @@ export default function Home() {
   );
 
   return (
-    <div>
+    <div className="h-screen flex flex-col">
       <ScannerDialog
         open={open}
         setOpen={setOpen}
@@ -53,9 +54,9 @@ export default function Home() {
 
       <MainNavbar />
 
-      <div className="min-h-full pt-16 pb-4">
+      <div id="content" className="pb-2 overflow-y-scroll">
         {barcodes.map((barcode) => (
-          <div className="rounded-md shadow-md mx-8 my-4 py-4 px-6 border-neutral-400">
+          <div className="rounded-md shadow-md mx-4 my-4 py-4 px-6 border-neutral-400">
             <div className="mb-2">
               <span className="rounded bg-purple-400 text-sm mr-2 px-2 text-white font-medium p-1">
                 {barcode.format}
