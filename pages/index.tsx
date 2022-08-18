@@ -8,7 +8,12 @@ import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
 const fakes: Barcode[] = [
   { data: "00000", formatId: 9, format: "EAN-13", date: new Date() },
-  { data: "123456789", formatId: 9, format: "EAN-13", date: new Date() },
+  {
+    data: "123456 7sdfdwfdsf klhdslfhsdflh sdlkfh lsdhfldkshflhsl kfhdklfhldskhflhdshflhdslhflksd hlfsdkhflkds hflkhsdlkf hlkdshflhsdhflkshd lkfhlsdhlf dlh891234567sdfdwfdsfklhdsl hsdflhsdlkfhls dhfldkshflh slkfhdklfhldskhflh dshflhdslhflks dhlfsdkhflkdshflkhsdlkf hlkdshflhsdhflksh dlkfhlsdhlfdlh89",
+    formatId: 9,
+    format: "EAN-13",
+    date: new Date(),
+  },
   { data: "123456789", formatId: 9, format: "EAN-13", date: new Date() },
   { data: "123456789", formatId: 9, format: "EAN-13", date: new Date() },
   { data: "123456789", formatId: 9, format: "EAN-13", date: new Date() },
@@ -40,6 +45,12 @@ export default function Home() {
     [barcodes]
   );
 
+  useEffect(() => {
+    disableBodyScroll(document.body, {
+      allowTouchMove: (el) => el.id === "content",
+    });
+  }, []);
+
   return (
     <div className="h-screen w-full flex flex-col">
       <ScannerDialog
@@ -50,11 +61,11 @@ export default function Home() {
 
       <MainNavbar />
 
-      <div id="content" className="pb-2 overflow-y-scroll">
+      <div id="content" className="pb-2 w-full overflow-y-scroll">
         {barcodes.map((barcode) => (
           <div className="rounded-md shadow-md mx-4 my-4 py-4 px-6 border-neutral-400">
-            <div className="mb-2">
-              <span className="rounded bg-purple-400 text-sm mr-2 px-2 text-white font-medium p-1">
+            <div className="mb-2 flex flex-row w-full justify-start items-start">
+              <span className="rounded bg-purple-400 text-sm mr-2 px-2 whitespace-nowrap text-white font-medium p-1">
                 {barcode.format}
               </span>
               {barcode.data}
