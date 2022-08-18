@@ -769,6 +769,10 @@ video {
   margin-top: 6rem;
 }
 
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
 .box-content {
   box-sizing: content-box;
 }
@@ -1482,6 +1486,12 @@ video {
 
   .sm\:duration-700 {
     transition-duration: 700ms;
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:block {
+    display: block;
   }
 }
 
