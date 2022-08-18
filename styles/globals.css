@@ -5,6 +5,14 @@ body {
   overscroll-behavior-y: none;
 }
 
+body {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
 a {
   color: inherit;
   text-decoration: none;
