@@ -33,10 +33,6 @@ export default function Home() {
   const [barcodes, setBarcodes] = useState<Barcode[]>(fakes);
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    disableBodyScroll(document.getElementById("content")!);
-  }, []);
-
   const onBarcodeScanned = useCallback(
     (barcode: Barcode) => {
       setBarcodes((prevBarcodes) => [barcode, ...prevBarcodes]);
@@ -45,7 +41,7 @@ export default function Home() {
   );
 
   return (
-    <div className="h-screen flex flex-col">
+    <div className="h-screen w-full flex flex-col">
       <ScannerDialog
         open={open}
         setOpen={setOpen}
