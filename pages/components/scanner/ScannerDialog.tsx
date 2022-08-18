@@ -9,9 +9,15 @@ type Props = {
   setOpen: (open: boolean) => void;
 };
 
+let html5QrcodeScanner: Html5QrcodeScanner | null;
+
 export default function ScannerDialog({ open = false, setOpen }: Props) {
   useEffect(() => {
-    if (!open) return;
+    if (!open) {
+      html5QrcodeScanner?.clear();
+      html5QrcodeScanner = null;
+      return;
+    }
 
     setTimeout(() => {
       const resultElement = document.getElementById("result");
@@ -33,7 +39,7 @@ export default function ScannerDialog({ open = false, setOpen }: Props) {
         resultElement!.innerHTML = err;
       }
 
-      let html5QrcodeScanner = new Html5QrcodeScanner(
+      html5QrcodeScanner = new Html5QrcodeScanner(
         "reader",
         {
           fps: 10,
