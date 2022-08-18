@@ -2,10 +2,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-}
-
-body {
-  position: fixed;
+  overscroll-behavior-y: none;
 }
 
 a {
