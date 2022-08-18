@@ -1,6 +1,9 @@
 import Head from "next/head";
 import "../styles/globals.css";
 import { AppProps } from "next/app";
+import moment from "moment";
+
+moment().locale("ru");
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -14,7 +17,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         />
         <meta name="description" content="Description" />
         <meta name="keywords" content="Keywords" />
-        <title>Next.js PWA Example</title>
+        <title>WB - Barcode Scanner</title>
 
         <link rel="manifest" href="/manifest.json" />
         <link
@@ -32,7 +35,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <link rel="apple-touch-icon" href="/apple-icon.png" />
         <link rel="stylesheet" href="/tailwind.css" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-        <meta name="theme-color" content="#317EFB" />
+        <meta name="theme-color" content="#6366F1" />
       </Head>
       <Component {...pageProps} />
     </>

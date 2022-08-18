@@ -1,37 +1,54 @@
-import { useEffect, useState } from "react";
-import { BiBarcodeReader } from "react-icons/bi";
+import { useCallback, useEffect, useState } from "react";
+import { Barcode } from "../types/models/barcode";
+import ScanButton from "./components/buttons/ScanButton";
 import MainNavbar from "./components/navbar/MainNavbar";
 import ScannerDialog from "./components/scanner/ScannerDialog";
+import moment from "moment";
 
 export default function Home() {
+  const [barcodes, setBarcodes] = useState<Barcode[]>([]);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     document.addEventListener("touchmove", (e) => e.preventDefault(), false);
   }, []);
 
+  const onBarcodeScanned = useCallback(
+    (barcode: Barcode) => {
+      setBarcodes((prevBarcodes) => [barcode, ...prevBarcodes]);
+    },
+    [barcodes]
+  );
+
   return (
     <div>
-      <ScannerDialog open={open} setOpen={setOpen} />
+      <ScannerDialog
+        open={open}
+        setOpen={setOpen}
+        onBarcodeScanned={onBarcodeScanned}
+      />
 
       <MainNavbar />
 
-      <div className="min-h-full"></div>
+      <div className="min-h-full">
+        {barcodes.map((barcode) => (
+          <div className="rounded-md shadow-md mx-8 my-4 py-4 px-6 border-neutral-400">
+            <div className="mb-2">
+              <span className="rounded bg-purple-400 text-sm mr-2 px-2 text-white font-medium p-1">
+                {barcode.format}
+              </span>
+              {barcode.data}
+            </div>
+
+            <div className="text-gray-600 text-xs">
+              {moment(barcode.date).format("D MMMM YYYY, HH:mm")}
+            </div>
+          </div>
+        ))}
+      </div>
 
       <footer className="flex flex-col items-center max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 fixed bottom-0 left-0 right-0">
-        <button
-          className="rounded-full px-5 py-3 mb-4 drop-shadow-xl flex row items-center"
-          style={{ backgroundColor: "#6366F1" }}
-          onClick={() => setOpen(true)}
-        >
-          <BiBarcodeReader color="white" size={20} className="mr-2" />
-          <span
-            className="text-white tracking-wide text-lg"
-            style={{ fontFamily: "Inter" }}
-          >
-            Сканировать
-          </span>
-        </button>
+        <ScanButton scan={() => setOpen(true)} />
       </footer>
 
       <div

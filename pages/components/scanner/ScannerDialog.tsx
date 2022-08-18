@@ -3,15 +3,21 @@ import { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
 import { Html5QrcodeScanner, Html5QrcodeScanType } from "html5-qrcode";
+import { Barcode } from "../../../types/models/barcode";
 
 type Props = {
   open: boolean;
   setOpen: (open: boolean) => void;
+  onBarcodeScanned: (barcode: Barcode) => void;
 };
 
 let html5QrcodeScanner: Html5QrcodeScanner | null;
 
-export default function ScannerDialog({ open = false, setOpen }: Props) {
+export default function ScannerDialog({
+  open = false,
+  setOpen,
+  onBarcodeScanned,
+}: Props) {
   useEffect(() => {
     if (!open) {
       html5QrcodeScanner?.clear();
@@ -20,24 +26,23 @@ export default function ScannerDialog({ open = false, setOpen }: Props) {
     }
 
     setTimeout(() => {
-      const resultElement = document.getElementById("result");
       const readerElement = document.getElementById("reader");
-      if (!resultElement || !readerElement) return;
+      if (!readerElement) return;
 
       function onScanSuccess(decodedText: string, decodedResult: any) {
-        const result = `Code matched = ${decodedText}<br />Result: ${JSON.stringify(
-          decodedResult
-        )}`;
-        console.log(result);
+        console.log("SCANNED: ", decodedResult);
 
-        resultElement!.innerHTML = result;
+        onBarcodeScanned({
+          data: decodedText,
+          formatId: decodedResult.result.format.format,
+          format: decodedResult.result.format.formatName,
+          date: new Date(),
+        });
+
+        setOpen(false);
       }
 
-      function onScanFailure(error: any) {
-        const err = `Code scan error = ${error}`;
-        console.warn(err);
-        resultElement!.innerHTML = err;
-      }
+      function onScanFailure(error: any) {}
 
       html5QrcodeScanner = new Html5QrcodeScanner(
         "reader",
@@ -129,7 +134,7 @@ export default function ScannerDialog({ open = false, setOpen }: Props) {
                               border: "1px solid #ddd",
                               padding: 12,
                             }}
-                          ></div>
+                          />
                         </div>
                       </div>
                       {/* /End replace */}
