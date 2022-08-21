@@ -19,7 +19,7 @@ const EmptyState = () => {
   );
 };
 
-export default function BarcodeList({ barcodes }: Props) {
+export default function BarcodeList({ barcodes = [] }: Props) {
   if (barcodes.length === 0) {
     return <EmptyState />;
   }

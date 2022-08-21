@@ -1,4 +1,5 @@
 import moment from "moment";
+import { Fragment } from "react";
 import { Barcode } from "../../../types/models/barcode";
 
 type Props = {
@@ -7,6 +8,10 @@ type Props = {
 
 export default function BarcodeItem(props: Props) {
   const { barcode } = props;
+
+  if (!barcode) {
+    return <Fragment />;
+  }
 
   return (
     <div className="rounded-md shadow-md mx-4 my-4 py-4 px-6 border-neutral-400">
