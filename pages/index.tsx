@@ -20,7 +20,7 @@ export default function Home() {
   );
 
   return (
-    <div className="h-screen w-full flex flex-col z-10">
+    <div className="h-screen w-full flex flex-col z-10 bg-white">
       <ScannerDialog
         open={open}
         setOpen={setOpen}
